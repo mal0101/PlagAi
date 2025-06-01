@@ -1,6 +1,7 @@
 from .preprocessing import preprocess_doc
 from .similarity import simple_word_overlap
 
+
 class BasicPlagiarismDetector:
     """basic plagiarism detector"""
     def __init__(self, threshold=0.5):
