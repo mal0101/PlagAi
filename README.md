@@ -224,7 +224,7 @@ This project is in active development. Current focus areas:
 
 ### Development Setup
 ```bash
-git clone <repository-url>
+git clone https://github.com/mal0101/PlagAi.git
 cd PlagAi
 pip install -r requirements.txt
 python -m nltk.downloader punkt stopwords
