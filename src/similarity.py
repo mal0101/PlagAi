@@ -1,6 +1,8 @@
 import math
 from sklearn.feature_extraction.text import TfidfVectorizer
 from collections import Counter
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
 
 def jaccard_similarity(d1,d2):
     """Calculate Jaccard similairty between two docs"""
@@ -57,3 +59,28 @@ def calculate_tfidf(documents):
             
         tfidf_docs.append(tfidf)
     return tfidf_docs
+
+def vector_cosine_similarity(vec1, vec2):
+    """calculate cosine similarity between two vectors"""
+    dot_product = np.dot(vec1, vec2)
+    norm1 = np.linalg.norm(vec1)
+    norm2 = np.linalg.norm(vec2)
+    if norm1 == 0 or norm2 == 0:
+        return 0.0
+    return dot_product / (norm1 * norm2)
+
+
+def tfidf_cosine_similarity(doc1_tokens, doc2_tokens, corpus_tokens):
+    """calculate cosine similarity using TF-IDF vectors"""
+    # Create vocabulary
+    vocab = list(set(doc1_tokens + doc2_tokens + [t for doc in corpus_tokens for t in doc]))
+    # Create documents to TF-IDF vectors
+    vectorizer = TfidfVectorizer(vocabulary=vocab)
+    # Prepare documents as strings (rejoined tokens)
+    doc1_str = ' '.join(doc1_tokens)
+    doc2_str = ' '.join(doc2_tokens)
+    tf_idf_matrix = vectorizer.fit_transform([doc1_str, doc2_str])
+    # Calculate cosine similarity
+    similarity = cosine_similarity(tf_idf_matrix[0:1], tf_idf_matrix[1:2])
+    
+    return similarity
