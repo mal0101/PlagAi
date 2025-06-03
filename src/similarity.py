@@ -84,3 +84,27 @@ def tfidf_cosine_similarity(doc1_tokens, doc2_tokens, corpus_tokens):
     similarity = cosine_similarity(tf_idf_matrix[0:1], tf_idf_matrix[1:2])
     
     return similarity
+
+def generate_ngrams(tokens,n):
+    """generate n-grams from tokens (list of tokens)"""
+    if len(tokens) < n:
+        return []
+    ngrams = []
+    for i in range(len(tokens) - n+1):
+        ngram = tuple(tokens[i:i+n])
+        ngrams.append(ngram)
+    return ngrams
+
+
+# Measure how two documents are similar by comparing their n-grams (sequences of consecutive n tokens)
+# This is useful for capturing phrases and sequences of words, not just individual words.
+def ngram_similarity(doc_tokens1, doc_tokens2, n = 2):
+    """calculate n-gram similarity between two documents"""
+    ngrams1 = set(generate_ngrams(doc_tokens1, n))
+    ngrams2 = set(generate_ngrams(doc_tokens2, n))
+    if len(ngrams1) == 0 and len(ngrams2) == 0:
+        return 1.0
+    if len(ngrams1) == 0 or len(ngrams2) == 0:
+        return 0.0
+    return jaccard_similarity(ngrams1, ngrams2)
+
