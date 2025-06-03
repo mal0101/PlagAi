@@ -170,7 +170,7 @@ python tests/test_similarity.py
 
 # Advanced feature testing
 python tests/tf_idf_testing.py     # TF-IDF implementation verification
-python tests/ngrams_testing.py    # N-gram similarity testing
+python tests/ngrams_testing.py     # N-gram similarity testing
 python tests/limitation_testing.py # System boundaries and edge cases
 ```
 
